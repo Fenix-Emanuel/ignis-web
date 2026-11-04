@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+<defs>
+<radialGradient id="bg" cx="50%" cy="50%" r="70%"><stop offset="0" stop-color="#22140C"/><stop offset=".6" stop-color="#0E0A08"/><stop offset="1" stop-color="#0B0908"/></radialGradient>
+<radialGradient id="halo" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FF5A1F" stop-opacity=".55"/><stop offset=".45" stop-color="#FF5A1F" stop-opacity=".14"/><stop offset="1" stop-color="#FF5A1F" stop-opacity="0"/></radialGradient>
+<linearGradient id="star" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE7B0"/><stop offset=".45" stop-color="#F5B54A"/><stop offset="1" stop-color="#FF5A1F"/></linearGradient>
+<radialGradient id="core" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".4" stop-color="#FFF1C9"/><stop offset="1" stop-color="#FFF1C9" stop-opacity="0"/></radialGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1080" height="1080" fill="url(#bg)"/>
+<circle cx="540" cy="540" r="420" fill="url(#halo)"/>
+<path filter="url(#glow)" fill="url(#star)" d="M540 255 C556 470 610 524 825 540 C610 556 556 610 540 825 C524 610 470 556 255 540 C470 524 524 470 540 255 Z"/>
+<path fill="#FFD27A" opacity=".55" transform="rotate(45 540 540)" d="M540 400 C546 515 565 534 680 540 C565 546 546 565 540 680 C534 565 515 546 400 540 C515 534 534 515 540 400 Z"/>
+<circle cx="540" cy="540" r="70" fill="url(#core)"/>
+<circle cx="742" cy="330" r="9" fill="#F5B54A" opacity=".9"/><circle cx="350" cy="760" r="6" fill="#FF5A1F" opacity=".8"/><circle cx="790" cy="740" r="5" fill="#FF8A2A" opacity=".7"/>
+</svg>
