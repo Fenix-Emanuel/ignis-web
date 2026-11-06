@@ -116,6 +116,72 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:co
 .svc article:hover .glow{opacity:1}
 @media (max-width:860px){.svc{grid-template-columns:1fr}.svc article,.svc article + article{padding:28px 0;border-left:0;border-top:1px solid var(--line)}}
 
+/* ===== Trabajos en abanico ===== */
+.fan{list-style:none;margin:0;padding:0;position:relative;height:clamp(460px,44vw,620px);border-top:1px solid var(--line)}
+.fan__item{position:absolute;left:50%;bottom:24px;width:clamp(190px,17vw,250px);transform-origin:50% 140%;transform:translateX(calc(-50% + var(--o) * 86%)) translateY(calc(var(--oy) * 14px)) rotate(calc(var(--o) * 7deg));transition:transform 1s cubic-bezier(.2,.7,.2,1) calc(var(--i) * 70ms)}
+.js-fan .fan:not(.is-open) .fan__item{transform:translateX(-50%) translateY(40px) rotate(calc(var(--o) * 2deg))}
+.fan-card{display:block;position:relative;aspect-ratio:9/16;border-radius:18px;overflow:hidden;border:1px solid var(--edge);background:var(--bg-2);color:var(--ink);text-decoration:none;box-shadow:0 30px 60px -20px rgba(0,0,0,.8);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s,border-color .45s,filter .45s}
+.fan-card__media,.fan-card__media img,.fan-card__media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fan-card__media video{opacity:0;transition:opacity .35s}
+.fan-card.is-playing video{opacity:1}
+.fan-card__meta{position:absolute;left:0;right:0;bottom:0;display:grid;gap:4px;padding:56px 16px 16px;background:linear-gradient(transparent,rgba(8,6,5,.92) 55%)}
+.fan-card__meta strong{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.15}
+.fan-card__more{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--ember);opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s}
+/* Al pasar el mouse: el proyecto se agranda y los vecinos se corren */
+.fan__item:hover,.fan__item:focus-within{z-index:10}
+.fan__item:hover .fan-card,.fan__item:focus-within .fan-card{transform:translateY(-34px) scale(1.14) rotate(calc(var(--o) * -5deg));border-color:rgba(255,90,31,.55);box-shadow:0 40px 80px -20px rgba(0,0,0,.9),0 0 40px rgba(255,90,31,.25)}
+.fan__item:hover .fan-card__more,.fan__item:focus-within .fan-card__more{opacity:1;transform:none}
+.fan:hover .fan__item:not(:hover) .fan-card{filter:brightness(.55) saturate(.8)}
+.fan__item:has(~ .fan__item:hover) .fan-card{transform:translateX(-26px)}
+.fan__item:hover ~ .fan__item .fan-card{transform:translateX(26px)}
+.fan-card:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.fan-hint{text-align:center;margin:8px 0 0}
+@media (max-width:899px){
+  .fan{height:auto;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:28px max(16px,env(safe-area-inset-right,0px)) 18px max(16px,env(safe-area-inset-left,0px));margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));scrollbar-width:none}
+  .fan::-webkit-scrollbar{display:none}
+  .fan__item,.js-fan .fan:not(.is-open) .fan__item{position:relative;left:auto;bottom:auto;flex:0 0 64vw;max-width:280px;transform:rotate(calc(var(--o) * 1.2deg));scroll-snap-align:center}
+  .fan__item:hover .fan-card{transform:none}
+  .fan__item:has(~ .fan__item:hover) .fan-card,.fan__item:hover ~ .fan__item .fan-card{transform:none}
+  .fan:hover .fan__item:not(:hover) .fan-card{filter:none}
+  .fan-card__more{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){.fan__item,.fan-card{transition:none}}
+
+/* ===== Ficha del proyecto ===== */
+.pmodal{padding:0;border:0;background:transparent;color:var(--ink);max-width:min(1120px,calc(100vw - 32px));width:100%;max-height:calc(100dvh - 32px)}
+.pmodal::backdrop{background:rgba(6,4,3,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.pmodal[open]{animation:pm-in .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes pm-in{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.pmodal__box{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,3vw,40px);padding:clamp(18px,2.4vw,28px);border:1px solid var(--edge);border-radius:24px;background:linear-gradient(160deg,#1a130f,#0e0b09);box-shadow:0 40px 120px rgba(0,0,0,.7)}
+.pmodal__x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(12,9,7,.8);color:var(--ink);font-size:16px;cursor:pointer;z-index:2}
+.pmodal__x:hover{border-color:var(--ember)}
+.pmodal__media{display:grid;gap:12px;justify-items:start}
+.pmodal__switch{display:flex;gap:6px}
+.pm-sw{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer}
+.pm-sw[aria-pressed="true"]{color:var(--bg);background:var(--ember);border-color:var(--ember)}
+.pmodal__screen{border-radius:16px;overflow:hidden;border:1px solid var(--edge);background:#000}
+.pmodal__screen video{display:block;background:#000}
+.pm-reel{height:min(70dvh,640px);aspect-ratio:9/16;width:auto}
+.pm-desk{width:min(46vw,560px);aspect-ratio:16/10;height:auto}
+.pmodal__screen[data-view="reel"] .pm-desk,.pmodal__screen[data-view="desk"] .pm-reel{display:none}
+.pmodal__info{display:flex;flex-direction:column;gap:14px;min-width:0;padding-top:46px;align-self:center}
+.pmodal__info h3{font-size:var(--t-xl)}
+.pmodal__lead{margin:0;color:var(--ink);font-size:1.05rem;max-width:48ch}
+.pmodal__did{margin:4px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.pmodal__did li{position:relative;padding-left:22px;color:var(--muted)}
+.pmodal__did li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 10px rgba(255,90,31,.6)}
+.pmodal__tags{margin:4px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.pmodal__tags li{font-family:var(--f-mono);font-size:var(--t-xs);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+.pmodal__actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+@media (max-width:760px){
+  .pmodal{max-width:100vw;max-height:100dvh;height:100dvh;margin:0}
+  .pmodal__box{grid-template-columns:minmax(0,1fr);border-radius:0;min-height:100%;align-content:start;overflow-y:auto;max-height:100dvh;padding-top:64px}
+  .pmodal__media{justify-items:center}
+  .pm-reel{height:min(58dvh,560px)}
+  .pm-desk{width:calc(100vw - 36px)}
+  .pmodal__info{padding-top:0}
+}
+
 /* ===== Antes / después ===== */
 .ba{padding-block:0 clamp(96px,14vh,160px)}
 .ba-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
@@ -380,43 +446,40 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h2 data-i18n="wk.h2">Trabajos <em class="s">encendidos</em></h2>
         <p data-i18n="wk.p">Gastronomía, tecnología, fitness y finanzas. Todas están en vivo: entra y recórrelas.</p>
       </div>
-      <div class="work-grid">
-        <a class="proj proj--feature" href="https://fenix-emanuel.github.io/hugos-cafeteria/" target="_blank" rel="noopener">
-          <div class="frame"><video class="frame__media" muted loop playsinline preload="none" poster="assets/work/video/hugos.jpg" aria-hidden="true"><source src="assets/work/video/hugos.mp4" type="video/mp4"></video><span class="heat" aria-hidden="true"></span></div>
-          <div class="proj-meta"><span class="label" data-i18n="wk.hugos.l">Café y pastelería · Austin, TX</span><span class="go" aria-hidden="true" data-i18n="wk.go">Ver en vivo ↗</span></div>
-          <h3>HUGO'S Cafetería</h3>
-          <p data-i18n="wk.hugos.p">El ritual del café argentino en una sola toma: grano, espresso, cortado y merienda al ritmo del scroll, y una carta que se abre en abanico.</p>
-          <ul data-i18n="wk.hugos.ul"><li>Video al scroll</li><li>Abanico animado</li><li>Bilingüe</li></ul>
-        </a>
-        <a class="proj" href="https://fenix-emanuel.github.io/el_fogon_tx/" target="_blank" rel="noopener">
-          <div class="frame"><video class="frame__media" muted loop playsinline preload="none" poster="assets/work/video/fogon.jpg" aria-hidden="true"><source src="assets/work/video/fogon.mp4" type="video/mp4"></video><span class="heat" aria-hidden="true"></span></div>
-          <div class="proj-meta"><span class="label" data-i18n="wk.fogon.l">Parrilla argentina · Austin, TX</span><span class="go" aria-hidden="true" data-i18n="wk.go">Ver en vivo ↗</span></div>
-          <h3>El Fogón TX</h3>
-          <p data-i18n="wk.fogon.p">Del fuego a la mesa en una sola toma: un video que avanza con el scroll y platos que se arman solos, ingrediente por ingrediente.</p>
-          <ul data-i18n="wk.fogon.ul"><li>Video al scroll</li><li>3D</li><li>Bilingüe</li></ul>
-        </a>
-        <a class="proj" href="https://fenix-emanuel.github.io/evo-landing/" target="_blank" rel="noopener">
-          <div class="frame"><video class="frame__media" muted loop playsinline preload="none" poster="assets/work/video/evo.jpg" aria-hidden="true"><source src="assets/work/video/evo.mp4" type="video/mp4"></video><span class="heat" aria-hidden="true"></span></div>
-          <div class="proj-meta"><span class="label" data-i18n="wk.evo.l">Redes e infraestructura</span><span class="go" aria-hidden="true" data-i18n="wk.go">Ver en vivo ↗</span></div>
-          <h3>EVO Solutions+</h3>
-          <p data-i18n="wk.evo.p">Un pulso de luz recorre el cable por cada servicio, con productos delante de palabras gigantes.</p>
-          <ul data-i18n="wk.evo.ul"><li>GSAP</li><li>Canvas</li><li>Bilingüe</li></ul>
-        </a>
-        <a class="proj" href="https://fenix-emanuel.github.io/entrega-2/" target="_blank" rel="noopener">
-          <div class="frame"><video class="frame__media" muted loop playsinline preload="none" poster="assets/work/video/balance.jpg" aria-hidden="true"><source src="assets/work/video/balance.mp4" type="video/mp4"></video><span class="heat" aria-hidden="true"></span></div>
-          <div class="proj-meta"><span class="label" data-i18n="wk.balance.l">Marca deportiva premium</span><span class="go" aria-hidden="true" data-i18n="wk.go">Ver en vivo ↗</span></div>
-          <h3>Balance Performance</h3>
-          <p data-i18n="wk.balance.p">Entrenamiento, nutrición y suplementos en un solo scroll cinematográfico, con tienda que completa el contacto.</p>
-          <ul data-i18n="wk.balance.ul"><li>GSAP</li><li>Scroll horizontal</li><li>Ecommerce</li></ul>
-        </a>
-        <a class="proj" href="https://fenix-emanuel.github.io/Finanzas/" target="_blank" rel="noopener">
-          <div class="frame"><video class="frame__media" muted loop playsinline preload="none" poster="assets/work/video/finanzas.jpg" aria-hidden="true"><source src="assets/work/video/finanzas.mp4" type="video/mp4"></video><span class="heat" aria-hidden="true"></span></div>
-          <div class="proj-meta"><span class="label" data-i18n="wk.fin.l">App web</span><span class="go" aria-hidden="true" data-i18n="wk.go">Ver en vivo ↗</span></div>
-          <h3>Flow · Finanzas</h3>
-          <p data-i18n="wk.fin.p">Una app de finanzas que se prueba en un clic: datos de ejemplo, gráficos, presupuestos y exportar a CSV, todo en el navegador.</p>
-          <ul data-i18n="wk.fin.ul"><li>App</li><li>Gráficos</li><li>Local-first</li></ul>
-        </a>
-      </div>
+      <!-- Abanico de trabajos: al pasar el mouse se agranda; al hacer clic se abre la ficha con el reel -->
+      <ul class="fan" id="fan" style="--n:5">
+          <li class="fan__item" style="--i:0;--o:-2;--oy:4">
+            <a class="fan-card" href="https://fenix-emanuel.github.io/hugos-cafeteria/" target="_blank" rel="noopener" data-project="hugos">
+              <span class="fan-card__media"><img src="assets/work/reel/hugos.jpg" alt="" width="540" height="960" loading="lazy" decoding="async"><video muted loop playsinline preload="none" aria-hidden="true"><source src="assets/work/reel/hugos.mp4" type="video/mp4"></video></span>
+              <span class="fan-card__meta"><span class="label" data-i18n="wk.hugos.l">Café y pastelería · Austin, TX</span><strong>HUGO'S Cafetería</strong><span class="fan-card__more" data-i18n="wk.more">Ver proyecto +</span></span>
+            </a>
+          </li>
+          <li class="fan__item" style="--i:1;--o:-1;--oy:1">
+            <a class="fan-card" href="https://fenix-emanuel.github.io/el_fogon_tx/" target="_blank" rel="noopener" data-project="fogon">
+              <span class="fan-card__media"><img src="assets/work/reel/fogon.jpg" alt="" width="540" height="960" loading="lazy" decoding="async"><video muted loop playsinline preload="none" aria-hidden="true"><source src="assets/work/reel/fogon.mp4" type="video/mp4"></video></span>
+              <span class="fan-card__meta"><span class="label" data-i18n="wk.fogon.l">Parrilla argentina · Austin, TX</span><strong>El Fogón TX</strong><span class="fan-card__more" data-i18n="wk.more">Ver proyecto +</span></span>
+            </a>
+          </li>
+          <li class="fan__item" style="--i:2;--o:0;--oy:0">
+            <a class="fan-card" href="https://fenix-emanuel.github.io/evo-landing/" target="_blank" rel="noopener" data-project="evo">
+              <span class="fan-card__media"><img src="assets/work/reel/evo.jpg" alt="" width="540" height="960" loading="lazy" decoding="async"><video muted loop playsinline preload="none" aria-hidden="true"><source src="assets/work/reel/evo.mp4" type="video/mp4"></video></span>
+              <span class="fan-card__meta"><span class="label" data-i18n="wk.evo.l">Redes e infraestructura</span><strong>EVO Solutions+</strong><span class="fan-card__more" data-i18n="wk.more">Ver proyecto +</span></span>
+            </a>
+          </li>
+          <li class="fan__item" style="--i:3;--o:1;--oy:1">
+            <a class="fan-card" href="https://fenix-emanuel.github.io/entrega-2/" target="_blank" rel="noopener" data-project="balance">
+              <span class="fan-card__media"><img src="assets/work/reel/balance.jpg" alt="" width="540" height="960" loading="lazy" decoding="async"><video muted loop playsinline preload="none" aria-hidden="true"><source src="assets/work/reel/balance.mp4" type="video/mp4"></video></span>
+              <span class="fan-card__meta"><span class="label" data-i18n="wk.balance.l">Marca deportiva premium</span><strong>Balance Performance</strong><span class="fan-card__more" data-i18n="wk.more">Ver proyecto +</span></span>
+            </a>
+          </li>
+          <li class="fan__item" style="--i:4;--o:2;--oy:4">
+            <a class="fan-card" href="https://fenix-emanuel.github.io/Finanzas/" target="_blank" rel="noopener" data-project="finanzas">
+              <span class="fan-card__media"><img src="assets/work/reel/finanzas.jpg" alt="" width="540" height="960" loading="lazy" decoding="async"><video muted loop playsinline preload="none" aria-hidden="true"><source src="assets/work/reel/finanzas.mp4" type="video/mp4"></video></span>
+              <span class="fan-card__meta"><span class="label" data-i18n="wk.fin.l">App web</span><strong>Flow · Finanzas</strong><span class="fan-card__more" data-i18n="wk.more">Ver proyecto +</span></span>
+            </a>
+          </li>
+      </ul>
+      <p class="fan-hint label" data-i18n="wk.hint">Pasa el mouse por un proyecto · haz clic para ver la ficha completa</p>
     </div>
   </section>
 
@@ -613,6 +676,11 @@ const I18N_EN = {
   "wk.fin.l": "Web app",
   "wk.fin.p": "A finance app you can try in one click: sample data, charts, budgets and CSV export, all in the browser.",
   "wk.fin.ul": "<li>App</li><li>Charts</li><li>Local-first</li>",
+  "wk.more": "View project +",
+  "wk.hint": "Hover a project · click to open the full case",
+  "wk.reel": "Reel",
+  "wk.desk": "Desktop",
+  "wk.ba": "See before &amp; after",
   "ba.h2": "Before <em class=\"s\">&amp; after</em>",
   "ba.p": "Three websites rebuilt with the Ignis process. Drag the line to compare the original with the new version.",
   "ba.before": "Before",
@@ -1089,6 +1157,34 @@ const CONTACTO = {
   update();
 })();
 </script>
+
+<!-- ===== Ficha de proyecto (pop-up) ===== -->
+<dialog class="pmodal" id="pmodal" aria-labelledby="pmTitle">
+  <div class="pmodal__box">
+    <button class="pmodal__x" type="button" id="pmClose" data-i18n-label="wk.close" aria-label="Cerrar">✕</button>
+    <div class="pmodal__media">
+      <div class="pmodal__switch" role="group" aria-label="Formato del video">
+        <button type="button" class="pm-sw" data-view="reel" aria-pressed="true" data-i18n="wk.reel">Reel</button>
+        <button type="button" class="pm-sw" data-view="desk" aria-pressed="false" data-i18n="wk.desk">Escritorio</button>
+      </div>
+      <div class="pmodal__screen" id="pmScreen" data-view="reel">
+        <video id="pmReel" class="pm-reel" muted loop playsinline controls preload="none"></video>
+        <video id="pmDesk" class="pm-desk" muted loop playsinline controls preload="none"></video>
+      </div>
+    </div>
+    <div class="pmodal__info">
+      <p class="label" id="pmLabel"></p>
+      <h3 id="pmTitle"></h3>
+      <p class="pmodal__lead" id="pmLead"></p>
+      <ul class="pmodal__did" id="pmDid"></ul>
+      <ul class="pmodal__tags" id="pmTags"></ul>
+      <div class="pmodal__actions">
+        <a class="btn hot" id="pmLive" href="#" target="_blank" rel="noopener" data-i18n="wk.go">Ver en vivo ↗</a>
+        <button class="btn" type="button" id="pmBA" data-i18n="wk.ba">Ver antes y después</button>
+      </div>
+    </div>
+  </div>
+</dialog>
 <script>
 /* ================= Antes / después: deslizador y pestañas ================= */
 (() => {
@@ -1118,6 +1214,116 @@ const CONTACTO = {
     }), { threshold: 0.5 });
     io.observe(stage);
   }
+})();
+</script>
+<script>
+/* ================= Abanico de trabajos + ficha del proyecto ================= */
+(() => {
+  const fan = document.getElementById('fan');
+  if (!fan) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const T = (es, en) => ({ es, en });
+  // Contenido de cada ficha (ES / EN)
+  const P = {
+    hugos: { title: "HUGO'S Cafetería", url: 'https://fenix-emanuel.github.io/hugos-cafeteria/', ba: null,
+      label: T('Café y pastelería · Austin, TX', 'Coffee & pastry · Austin, TX'),
+      lead: T('El ritual del café argentino en una sola toma, al ritmo del scroll.', 'The Argentine coffee ritual in a single shot, paced by the scroll.'),
+      did: [T('Video de IA que avanza cuadro por cuadro con el scroll', 'AI video that advances frame by frame as you scroll'),
+            T('Cuatro escenas con palabra gigante: grano, espresso, cortado y merienda', 'Four scenes with giant words: bean, espresso, cortado and merienda'),
+            T('Carta que se abre en abanico, en español e inglés', 'A menu that fans out, in Spanish and English')],
+      tags: T(['Video al scroll', 'GSAP', 'Bilingüe'], ['Scroll video', 'GSAP', 'Bilingual']) },
+    fogon: { title: 'El Fogón TX', url: 'https://fenix-emanuel.github.io/el_fogon_tx/', ba: null,
+      label: T('Parrilla argentina · Austin, TX', 'Argentine grill · Austin, TX'),
+      lead: T('Del fuego a la mesa en una sola toma.', 'From fire to table in a single shot.'),
+      did: [T('Video del fuego que avanza con el scroll', 'Fire video that moves with the scroll'),
+            T('Platos que se arman ingrediente por ingrediente', 'Dishes that assemble themselves, ingredient by ingredient'),
+            T('Menú y reservas en español e inglés', 'Menu and reservations in Spanish and English')],
+      tags: T(['Video al scroll', '3D', 'Bilingüe'], ['Scroll video', '3D', 'Bilingual']) },
+    evo: { title: 'EVO Solutions+', url: 'https://fenix-emanuel.github.io/evo-landing/', ba: 'evo',
+      label: T('Redes e infraestructura', 'Networks & infrastructure'),
+      lead: T('Una empresa de redes que se siente: la señal recorre cada servicio.', 'A network company you can feel: the signal travels through every service.'),
+      did: [T('El pasillo de servidores se acerca hasta un punto de luz', 'The server aisle pushes in to a single point of light'),
+            T('Productos creados con IA delante de palabras gigantes', 'AI-generated products in front of giant words'),
+            T('Bot que deriva cada consulta a WhatsApp', 'A bot that routes every inquiry to WhatsApp')],
+      tags: T(['GSAP', 'Canvas', 'Bilingüe'], ['GSAP', 'Canvas', 'Bilingual']) },
+    balance: { title: 'Balance Performance', url: 'https://fenix-emanuel.github.io/entrega-2/', ba: 'balance',
+      label: T('Marca deportiva premium', 'Premium sports brand'),
+      lead: T('De una tienda armada con Bootstrap a una marca deportiva premium.', 'From a Bootstrap store to a premium sports brand.'),
+      did: [T('Hero con palabra gigante y cámara que empuja con el scroll', 'Giant-word hero with a camera push on scroll'),
+            T('Método en paneles horizontales fijados al scroll', 'A method section in pinned horizontal panels'),
+            T('La tienda completa el formulario de contacto sola', 'The shop pre-fills the contact form')],
+      tags: T(['GSAP', 'Lenis', 'Ecommerce'], ['GSAP', 'Lenis', 'E-commerce']) },
+    finanzas: { title: 'Flow · Finanzas', url: 'https://fenix-emanuel.github.io/Finanzas/', ba: 'finanzas',
+      label: T('App web', 'Web app'),
+      lead: T('Dos dashboards viejos convertidos en una sola app de finanzas.', 'Two old dashboards turned into a single finance app.'),
+      did: [T('Demo con seis meses de datos, gráficos y presupuestos', 'A demo with six months of data, charts and budgets'),
+            T('Sin servidor: los datos quedan en el navegador', 'No server: the data stays in the browser'),
+            T('Exportar a CSV, español e inglés, tema claro y oscuro', 'CSV export, Spanish and English, light and dark themes')],
+      tags: T(['JavaScript', 'Chart.js', 'Local-first'], ['JavaScript', 'Chart.js', 'Local-first']) },
+  };
+
+  // El abanico se abre cuando entra en pantalla
+  document.documentElement.classList.add('js-fan');
+  if (reduce || !('IntersectionObserver' in window)) fan.classList.add('is-open');
+  else {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { fan.classList.add('is-open'); io.disconnect(); } }), { threshold: 0.3 });
+    io.observe(fan);
+  }
+
+  // Al pasar el mouse, el reel corre dentro de la carta
+  const cards = [...fan.querySelectorAll('.fan-card')];
+  cards.forEach(card => {
+    const v = card.querySelector('video');
+    const play = () => { if (reduce) return; v.preload = 'auto'; const pr = v.play(); if (pr) pr.then(() => card.classList.add('is-playing')).catch(() => {}); };
+    const stop = () => { v.pause(); card.classList.remove('is-playing'); };
+    card.addEventListener('mouseenter', play); card.addEventListener('focus', play);
+    card.addEventListener('mouseleave', stop); card.addEventListener('blur', stop);
+  });
+
+  // Ficha del proyecto
+  const dlg = document.getElementById('pmodal');
+  const $ = id => document.getElementById(id);
+  const reel = $('pmReel'), desk = $('pmDesk'), screen = $('pmScreen');
+  let current = null, opener = null;
+  const L = () => (typeof LANG !== 'undefined' && LANG === 'en') ? 'en' : 'es';
+  const setView = view => {
+    screen.dataset.view = view;
+    document.querySelectorAll('.pm-sw').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === view)));
+    const on = view === 'reel' ? reel : desk, off = view === 'reel' ? desk : reel;
+    off.pause(); if (!reduce) { const pr = on.play(); if (pr) pr.catch(() => {}); }
+  };
+  const fill = () => {
+    const d = P[current], l = L();
+    $('pmLabel').textContent = d.label[l];
+    $('pmTitle').textContent = d.title;
+    $('pmLead').textContent = d.lead[l];
+    $('pmDid').innerHTML = d.did.map(x => `<li>${x[l]}</li>`).join('');
+    $('pmTags').innerHTML = d.tags[l].map(x => `<li>${x}</li>`).join('');
+    $('pmLive').href = d.url;
+    $('pmBA').hidden = !d.ba;
+    $('pmClose').setAttribute('aria-label', l === 'en' ? 'Close' : 'Cerrar');
+  };
+  const open = (key, from) => {
+    current = key; opener = from;
+    reel.poster = `assets/work/reel/${key}.jpg`; reel.src = `assets/work/reel/${key}.mp4`;
+    desk.poster = `assets/work/video/${key}.jpg`; desk.src = `assets/work/video/${key}.mp4`;
+    fill();
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+    document.documentElement.style.overflow = 'hidden';
+    setView('reel');
+  };
+  const close = () => { reel.pause(); desk.pause(); if (dlg.open) dlg.close(); };
+  dlg.addEventListener('close', () => { document.documentElement.style.overflow = ''; if (opener) opener.focus(); });
+  cards.forEach(card => card.addEventListener('click', e => { e.preventDefault(); open(card.dataset.project, card); }));
+  $('pmClose').addEventListener('click', close);
+  dlg.addEventListener('click', e => { if (e.target === dlg) close(); }); // clic fuera de la ficha
+  document.querySelectorAll('.pm-sw').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
+  $('pmBA').addEventListener('click', () => {
+    const key = P[current].ba; close();
+    document.querySelector(`.ba-tab[data-ba="${key}"]`)?.click();
+    document.getElementById('antes-despues')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  });
+  addEventListener('ignis:lang', () => { if (dlg.open) fill(); });
 })();
 </script>
 </body>
